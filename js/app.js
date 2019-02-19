@@ -40,17 +40,10 @@ Enemy.prototype.update = function(dt) {
         this.x+= dt;
     }
 }
-// Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 
 var Player = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-
     Entity.call(this, 'images/char-boy.png', startX, startY, true);
 
     this.lives = 4;
@@ -79,12 +72,6 @@ Player.prototype.handleInput = function(input){
 var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
-/*
-* Now instantiate your objects.
-* Place all enemy objects in an array called allEnemies
-* Place the player object in a variable called player
-*/
-
 
 var allEnemies = [];
 
@@ -132,8 +119,6 @@ function init_all(){
     document.addEventListener('keyup', playerKeyupListener);
 }
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method.
 var playerKeyupListener = function (e){
     var allowedKeys = {
         37: 'left',
