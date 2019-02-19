@@ -15,10 +15,6 @@
  */
 
 var Engine = (function(global) {
-    /* Predefine the variables we'll be using within this scope,
-     * create the canvas element, grab the 2D context for that canvas
-     * set the canvas elements height/width and add it to the DOM.
-     */
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
@@ -56,16 +52,8 @@ var Engine = (function(global) {
     canvas.height = (numRows+1) * tileHeight;
     doc.body.appendChild(canvas);
 
-    /* This function serves as the kickoff point for the game loop itself
-     * and handles properly calling the update and render methods.
-     */
     function main() {
-        /* Get our time delta information which is required if your game
-         * requires smooth animation. Because everyone's computer processes
-         * instructions at different speeds we need a constant value that
-         * would be the same for everyone (regardless of how fast their
-         * computer is) - hurray time!
-         */
+        
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
@@ -106,16 +94,7 @@ var Engine = (function(global) {
 
             render();
          }
-
-
-        /* Set our lastTime variable which is used to determine the time delta
-         * for the next time this function is called.
-         */
         lastTime = now;
-
-        /* Use the browser's requestAnimationFrame function to call this
-         * function again as soon as the browser is able to draw another frame.
-         */
         win.requestAnimationFrame(main);
     };
 
@@ -141,15 +120,7 @@ var Engine = (function(global) {
         main();
     }
 
-    /* This function is called by main (our game loop) and itself calls all
-     * of the functions which may need to update entity's data. Based on how
-     * you implement your collision detection (when two entities occupy the
-     * same space, for instance when your character should die), you may find
-     * the need to add an additional function call here. For now, we've left
-     * it commented out - you may or may not want to implement this
-     * functionality this way (you could just implement collision detection
-     * on the entities themselves within your app.js file).
-     */
+  
     function update(dt) {
         updateEnemyPositions(dt);
         checkCollisions();
@@ -233,19 +204,9 @@ var Engine = (function(global) {
                 col * tileWidth, topMargin - offsetY);
         }
 
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
+                
                 var imgPath = 'images/'+ rowTiles[row] +'-block.png';
                 ctx.drawImage(Resources.get(imgPath), col * tileWidth, topMargin + row * offsetY);
             }
@@ -328,10 +289,7 @@ var Engine = (function(global) {
         doc.removeEventListener('keyup', playerKeyupListener);
     }
 
-    /* This function is called by the render function and is called on each game
-     * tick. It's purpose is to then call the render functions you have defined
-     * on your entities within app.js
-     */
+
     function renderEntities() {
         // Render enemies
         allEnemies.forEach(function(enemy) {
